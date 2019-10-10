@@ -20,6 +20,13 @@ From C/C++ Program: Number of tasks= 2 My rank= 1 Running on mac-2.local
 From C/C++ Program: Number of tasks= 2 My rank= 0 Running on mac-2.local
 ```
 
+To run on cluster nodes
+```
+mpirun --hostfile myHostfile mpi_hello
+```
+You need to create a new file ```myHostfile``` and add ```localhost``` and other cluster node in each line.
+
+
 Note, add ```--prefix /usr/local``` if you have the folloing error:
 ```
 orted: error while loading shared libraries: libopen-rte.so.40: cannot open shared object file: No such file or directory
@@ -40,9 +47,13 @@ On the ```tardis``` cluster, you can find ```mpi.jar``` in  ```/usr/local/pub/ph
 Note, here is how your can ```mpi.jar``` to your IntelliJ: Go to ```File/Project Structure.../Modules```, navigate to ```<PATH-TO-OpenMPI-Source>/openmpi-4.0.1/ompi/mpi/java/java/mpi.jar```.
 
 
-To run your MPI program
+To run your MPI program locally
 ```
 mpiexec java -cp <PATH-TO-OpenMPI-Source>/openmpi-4.0.1/ompi/mpi/java/java/mpi.jar  edu.rit.cs.MPI_Hello
+```
+or running it across cluster nodes; create a new file ```myHostfile``` and add ```localhost``` and other nodes in each line, then run as
+```
+mpirun --hostfile myHostfile --prefix /usr/local  java -cp /usr/local/pub/ph/mpi.jar edu.rit.cs.MPI_Hello
 ```
 
 Sample output
