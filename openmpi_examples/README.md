@@ -45,7 +45,7 @@ cd src/main/java
 mpijavac -cp <PATH-TO-OpenMPI-Source>/openmpi-4.0.1/ompi/mpi/java/java/mpi.jar edu/rit/cs/MPI_Hello.java
 ```
 ```mpi.jar``` can be found in your OpenMPI installation folder e.g.,```openmpi-4.0.1/ompi/mpi/java/java/mpi.jar```. 
-On the ```tardis``` cluster, you can find ```mpi.jar``` in  ```/usr/local/pub/ph/lib/mpi.jar```.
+On the ```tardis``` cluster, you can find ```mpi.jar``` in  ```/usr/local/pub/ph/mpi.jar```.
 
 Note, here is how your can ```mpi.jar``` to your IntelliJ: Go to ```File/Project Structure.../Modules```, navigate to ```<PATH-TO-OpenMPI-Source>/openmpi-4.0.1/ompi/mpi/java/java/mpi.jar```.
 
