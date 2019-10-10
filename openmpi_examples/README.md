@@ -51,13 +51,19 @@ To run your MPI program locally
 ```
 mpiexec java -cp <PATH-TO-OpenMPI-Source>/openmpi-4.0.1/ompi/mpi/java/java/mpi.jar  edu.rit.cs.MPI_Hello
 ```
-or running it across cluster nodes; create a new file ```myHostfile``` and add ```localhost``` and other nodes in each line, then run as
-```
-mpirun --hostfile myHostfile --prefix /usr/local  java -cp /usr/local/pub/ph/mpi.jar edu.rit.cs.MPI_Hello
-```
 
 Sample output
 ```
 From Java Program: Number of tasks= 2, My rank=1, Running on mac-2.local
 From Java Program: Number of tasks= 2, My rank=0, Running on mac-2.local
+```
+
+Or running it across cluster nodes; create a new file ```myHostfile``` and add ```localhost``` and other nodes in each line, then run as
+```
+mpirun --hostfile myHostfile  java -cp /usr/local/pub/ph/mpi.jar edu.rit.cs.MPI_Hello
+```
+
+Note, add ```--prefix /usr/local``` before the ```java``` keyword if you have the folloing error:
+```
+orted: error while loading shared libraries: libopen-rte.so.40: cannot open shared object file: No such file or directory
 ```
