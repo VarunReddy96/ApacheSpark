@@ -56,6 +56,9 @@ In each container (run ```docker attach container-{yourusername}-index``` to att
 git pull; cd /csci654/docker/; bash initContainer.bash
 ```
 
+
+Depends on C/C++ or Java, please following the corresponding instructions below.
+
 #### C/C++
 
 To compile
