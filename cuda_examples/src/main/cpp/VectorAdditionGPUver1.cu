@@ -1,88 +1,69 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include <iostream>
 #include <math.h>
 
-// CUDA kernel. Each thread takes care of one element of c
-__global__ void vecAdd(double *a, double *b, double *c, int n)
+// Device code
+__global__
+void VecAdd(float* A, float* B, float* C, int N)
 {
-    // Get our global thread ID
-    int id = blockIdx.x*blockDim.x+threadIdx.x;
-
-    // Make sure we do not go out of bounds
-    if (id < n)
-        c[id] = a[id] + b[id];
+    for (int i = 0; i < N; i++)
+        C[i] = A[i] + B[i];
 }
 
-int main( int argc, char* argv[] )
+// Host code
+int main(void)
 {
-    // Size of vectors
-    int n = 100000;
+    int N = 1<<20;
+    size_t size = N * sizeof(float);
 
-    // Host input vectors
-    double *h_a;
-    double *h_b;
-    //Host output vector
-    double *h_c;
+    // Allocate input vectors h_A and h_B in host memory
+    float* h_A = (float*)malloc(size);
+    float* h_B = (float*)malloc(size);
+    float* h_C = (float*)malloc(size);
 
-    // Device input vectors
-    double *d_a;
-    double *d_b;
-    //Device output vector
-    double *d_c;
-
-    // Size, in bytes, of each vector
-    size_t bytes = n*sizeof(double);
-
-    // Allocate memory for each vector on host
-    h_a = (double*)malloc(bytes);
-    h_b = (double*)malloc(bytes);
-    h_c = (double*)malloc(bytes);
-
-    // Allocate memory for each vector on GPU
-    cudaMalloc(&d_a, bytes);
-    cudaMalloc(&d_b, bytes);
-    cudaMalloc(&d_c, bytes);
-
-     int i;
-        // Initialize vectors on host
-        for( i = 0; i < n; i++ ) {
-            h_a[i] = sin(i)*sin(i);
-            h_b[i] = cos(i)*cos(i);
-        }
-
-        // Copy host vectors to device
-        cudaMemcpy( d_a, h_a, bytes, cudaMemcpyHostToDevice);
-        cudaMemcpy( d_b, h_b, bytes, cudaMemcpyHostToDevice);
-
-        int blockSize, gridSize;
-
-        // Number of threads in each thread block
-        blockSize = 1024;
-
-        // Number of thread blocks in grid
-        gridSize = (int)ceil((float)n/blockSize);
-
-        // Execute the kernel
-        vecAdd<<<gridSize, blockSize>>>(d_a, d_b, d_c, n);
-
-        // Copy array back to host
-        cudaMemcpy( h_c, d_c, bytes, cudaMemcpyDeviceToHost );
-
-        // Sum up vector c and print result divided by n, this should equal 1 within error
-        double sum = 0;
-        for(i=0; i<n; i++)
-            sum += h_c[i];
-        printf("final result: %f\n", sum/n);
-
-        // Release device memory
-        cudaFree(d_a);
-        cudaFree(d_b);
-        cudaFree(d_c);
-
-        // Release host memory
-        free(h_a);
-        free(h_b);
-        free(h_c);
-
-        return 0;
+    // initialize x and y arrays on the host
+    for (int i = 0; i < N; i++) {
+        h_A[i] = 1.0f;
+        h_B[i] = 2.0f;
     }
+
+    // Allocate vectors in device memory
+    float* d_A;
+    cudaMalloc(&d_A, size);
+    float* d_B;
+    cudaMalloc(&d_B, size);
+    float* d_C;
+    cudaMalloc(&d_C, size);
+
+    // Copy vectors from host memory to device memory
+    cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice);
+    cudaMemcpy(d_B, h_B, size, cudaMemcpyHostToDevice);
+
+    // Invoke kernel
+    VecAdd<<<1, 1>>>(d_A, d_B, d_C, N);
+
+    // Copy result from device memory to host memory
+    // h_C contains the result in host memory
+    cudaMemcpy(h_C, d_C, size, cudaMemcpyDeviceToHost);
+
+    // Check for errors (all values should be 3.0f)
+    float maxError = 0.0f;
+    for (int i = 0; i < N; i++)
+        maxError = fmax(maxError, fabs(h_C[i]-3.0f));
+
+    if(maxError>0.0f) {
+        std::cout << "Test Failed!" << std::endl;
+        std::cout << "Max error: " << maxError << std::endl;
+    } else {
+        std::cout << "Test Passed!" << std::endl;
+    }
+
+    // Free device memory
+    cudaFree(d_A);
+    cudaFree(d_B);
+    cudaFree(d_C);
+
+    // Free host memory
+    delete h_A, h_B, h_C;
+
+    return 0;
+}
