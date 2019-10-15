@@ -1,0 +1,18 @@
+==15121== NVPROF is profiling process 15121, command: ./bin/VectorAdditionGPUver1
+==15121== Profiling application: ./bin/VectorAdditionGPUver1
+==15121== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   63.33%  156.84us         2  78.417us  77.634us  79.201us  [CUDA memcpy HtoD]
+                   31.39%  77.730us         1  77.730us  77.730us  77.730us  [CUDA memcpy DtoH]
+                    5.28%  13.088us         1  13.088us  13.088us  13.088us  vecAdd(double*, double*, double*, int)
+      API calls:   98.59%  176.98ms         3  58.992ms  306.29us  176.36ms  cudaMalloc
+                    0.59%  1.0639ms         3  354.63us  161.67us  682.69us  cudaMemcpy
+                    0.28%  509.41us        94  5.4190us     653ns  183.83us  cuDeviceGetAttribute
+                    0.28%  502.16us         3  167.39us  152.23us  180.80us  cudaFree
+                    0.12%  218.97us         1  218.97us  218.97us  218.97us  cuDeviceTotalMem
+                    0.10%  180.43us         1  180.43us  180.43us  180.43us  cudaLaunch
+                    0.02%  42.624us         1  42.624us  42.624us  42.624us  cuDeviceGetName
+                    0.00%  6.1800us         3  2.0600us  1.1680us  3.6320us  cuDeviceGetCount
+                    0.00%  4.5690us         2  2.2840us     766ns  3.8030us  cuDeviceGet
+                    0.00%  2.8710us         1  2.8710us  2.8710us  2.8710us  cudaConfigureCall
+                    0.00%  1.6890us         4     422ns     176ns     937ns  cudaSetupArgument
