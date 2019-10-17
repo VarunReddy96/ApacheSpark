@@ -3,7 +3,6 @@ NVCC?=nvcc
 OUT_DIR=bin
 
 EXECS= VectorAdditionCPU \
-       hello \
        VectorAdditionGPUver1 \
        VectorAdditionGPUver2 \
        VectorAdditionGPUver3
@@ -18,9 +17,6 @@ ${OUT_DIR}:
 
 VectorAdditionCPU: VectorAdditionCPU.cpp
 	${GCC} -o ${OUT_DIR}/VectorAdditionCPU VectorAdditionCPU.cpp
-
-hello: hello.cu
-	${NVCC} -o ${OUT_DIR}/hello hello.cu
 
 VectorAdditionGPUver1: VectorAdditionGPUver1.cu
 	${NVCC} -o ${OUT_DIR}/VectorAdditionGPUver1 VectorAdditionGPUver1.cu
