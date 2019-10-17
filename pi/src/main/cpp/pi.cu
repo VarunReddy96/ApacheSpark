@@ -14,7 +14,7 @@
 __managed__ int points_in_circle;
 __managed__ double rnd_seed;
 
-// Kernel function to add the elements of two arrays
+// Kernel function
 __global__
 void countPoints(int total_points, float radius)
 {
