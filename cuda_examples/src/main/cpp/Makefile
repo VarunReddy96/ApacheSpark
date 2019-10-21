@@ -3,6 +3,7 @@ NVCC?=nvcc
 OUT_DIR=bin
 
 EXECS= VectorAdditionCPU \
+       GetDeviceInfo \
        VectorAdditionGPUver1 \
        VectorAdditionGPUver2 \
        VectorAdditionGPUver3
@@ -14,9 +15,11 @@ directories: ${OUT_DIR}
 ${OUT_DIR}:
 	mkdir -p ${OUT_DIR}
 
-
 VectorAdditionCPU: VectorAdditionCPU.cpp
 	${GCC} -o ${OUT_DIR}/VectorAdditionCPU VectorAdditionCPU.cpp
+
+GetDeviceInfo: GetDeviceInfo.cu
+	${NVCC} -o ${OUT_DIR}/GetDeviceInfo GetDeviceInfo.cu
 
 VectorAdditionGPUver1: VectorAdditionGPUver1.cu
 	${NVCC} -o ${OUT_DIR}/VectorAdditionGPUver1 VectorAdditionGPUver1.cu
