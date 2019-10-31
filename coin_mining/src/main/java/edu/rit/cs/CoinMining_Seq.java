@@ -1,5 +1,6 @@
 package edu.rit.cs;
 
+import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -66,15 +67,67 @@ public class CoinMining_Seq {
         return nonce;
     }
 
+    public static String HexValueDivideBy(String hexValue, int val) {
+        BigInteger tmp = new BigInteger(hexValue,16);
+        tmp = tmp.divide(BigInteger.valueOf(val));
+        String newHex = bytesToHex(tmp.toByteArray());
+        while (newHex.length() < hexValue.length()) {
+            newHex = '0' + newHex;
+        }
+        return newHex;
+    }
+
+    public static String HexValueMultipleBy(String hexValue, int val) {
+        BigInteger tmp = new BigInteger(hexValue,16);
+        tmp = tmp.multiply(BigInteger.valueOf(val));
+        String newHex = bytesToHex(tmp.toByteArray());
+        while (newHex.length() < hexValue.length()) {
+            newHex = '0' + newHex;
+        }
+        return newHex;
+    }
 
     public static void main(String[] args) {
-        String blockHash = SHA256("CSCI-654 Foundations of Parallel Computing");
-        System.out.println("BlockHash: " + blockHash);
+        // number of blocks to be generated or number of rounds; default to 5
+        int numberOfBlocks=10;
+        // average block generation time, default to 30 Secs.
+        double avgBlockGenerationTimeInSec = 30.0;
 
-        String targetHash = "0000092a6893b712892a41e8438e3ff2242a68747105de0395826f60b38d88dc";
-        System.out.println("TargetHash: " + targetHash);
+        // init block hash
+        String initBlockHash = SHA256("CSCI-654 Foundations of Parallel Computing");
+        System.out.println("Initial Block Hash:  " + initBlockHash);
+        // init target hash
+        String initTargetHash = "0000092a6893b712892a41e8438e3ff2242a68747105de0395826f60b38d88dc";
+        System.out.println("Initial Target Hash: " + initTargetHash);
+        System.out.println();
 
-        int nonce = pow(blockHash, targetHash);
+        int currentBlockID = 1;
+        int nonce = 0;
+        String tmpBlockHash = initBlockHash;
+        String tmpTargetHash = initTargetHash;
+        MyTimer myTimer;
+        while(currentBlockID <= numberOfBlocks) {
+            myTimer = new MyTimer("CurrentBlockID:"+currentBlockID);
+            myTimer.start_timer();
+            // assign jobs to worker
+            nonce = pow(tmpBlockHash, tmpTargetHash);
+            myTimer.stop_timer();
+            myTimer.print_elapsed_time();
+
+            // found a new block
+            tmpBlockHash = SHA256(tmpBlockHash+"|"+nonce);
+
+            // update the target
+            if(myTimer.get_elapsed_time_in_sec()<avgBlockGenerationTimeInSec)
+                tmpTargetHash = HexValueDivideBy(tmpTargetHash, 2);
+            else
+                tmpTargetHash = HexValueMultipleBy(tmpTargetHash, 2);
+
+            System.out.println("New Block Hash:  " + tmpBlockHash);
+            System.out.println("New Target Hash: " + tmpTargetHash);
+            System.out.println();
+            currentBlockID++;
+        }
 
     }
 
