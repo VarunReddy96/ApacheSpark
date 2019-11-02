@@ -55,3 +55,8 @@ Add the following as VM Option
 ```
 
 ## **Apache Spark Program**
+
+```
+mvn compile; mvn package
+mvn exec:java -Dexec.mainClass=edu.rit.cs.Pi_Spark
+```
