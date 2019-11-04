@@ -44,3 +44,12 @@
 </table>
 <p></p>
 <p>The&nbsp;<strong>diversity index</strong>&nbsp;<em>D</em>&nbsp;for a population is the probability that two randomly chosen individuals in that population will be of different races. The diversity index is calculated with this formula, where&nbsp;<em>N</em><sub><em>i</em></sub>&nbsp;is the number of individuals in racial category&nbsp;<em>i</em>&nbsp;and&nbsp;<em>T</em>&nbsp;is the total number of individuals:</p>
+<tr>
+<td align="right" valign="center"><em>D</em>&nbsp;&nbsp;=&nbsp;&nbsp;1/<em>T</em><sup>2</sup>&nbsp;</td>
+<td align="center" valign="center">&Sigma;</td>
+<td align="left" valign="center">&nbsp;<em>N</em><sub><em>i</em></sub>&nbsp;(<em>T</em>&nbsp;&minus;&nbsp;<em>N</em><sub><em>i</em></sub>)</td>
+</tr>
+
+
+#### Note:
+Please download the [census dataset](https://www2.census.gov/programs-surveys/popest/datasets/2010-2017/counties/asrh/cc-est2017-alldata.csv) from the USCB web site and place this dataset into the ```dataset``` folder.

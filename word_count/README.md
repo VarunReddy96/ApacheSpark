@@ -1,8 +1,10 @@
 ### Download the dataset
 * Download the ["Amazon fine food reviews"](https://www.kaggle.com/snap/amazon-fine-food-reviews/downloads/amazon-fine-food-reviews.zip/2) dataset
-* Extract a file "Reviews.csv" into a folder called "amazon-fine-food-reviews" so that all reviews are in this path 
+* Extract a file "Reviews.csv" into a folder called "dataset" and rename it to "amazon-reviews.csv"
+
+You should have the following
 ```
-amazon-fine-food-reviews/Reviews.csv
+dataset/amazon-reviews.csv
 ``` 
 
 ### Run this example in this folder
