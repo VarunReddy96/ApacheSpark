@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class WordCount_Seq_Improved {
 
-    public static final String AMAZON_FINE_FOOD_REVIEWS_file="amazon-fine-food-reviews/Reviews.csv";
+    public static final String AMAZON_FINE_FOOD_REVIEWS_file="dataset/amazon-reviews.csv";
 
     /**
      * Read and parse all reviews
@@ -55,7 +55,7 @@ public class WordCount_Seq_Improved {
 
         for(AmazonFineFoodReview review : allReviews) {
             Pattern pattern = Pattern.compile("([a-zA-Z]+)");
-            Matcher matcher = pattern.matcher(review.get_Summary());
+            Matcher matcher = pattern.matcher(review.getSummary());
 
             while(matcher.find())
                 kv_pairs.add(new KV(matcher.group().toLowerCase(), 1));

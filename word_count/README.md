@@ -10,3 +10,15 @@ amazon-fine-food-reviews/Reviews.csv
 mvn package
 java -cp target/word_count-1.0-SNAPSHOT.jar edu.rit.cs.WordCount_Seq
 ```
+
+Or
+```
+java -cp target/word_count-1.0-SNAPSHOT.jar edu.rit.cs.WordCount_Seq_Improved
+```
+
+
+### Word Count example in Spark
+```
+mvn compile; mvn package
+mvn exec:java -Dexec.mainClass=edu.rit.cs.WordCount_Spark
+```

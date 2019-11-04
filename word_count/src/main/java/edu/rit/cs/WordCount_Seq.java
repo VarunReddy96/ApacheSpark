@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 
 public class WordCount_Seq {
-    public static final String AMAZON_FINE_FOOD_REVIEWS_file="amazon-fine-food-reviews/Reviews.csv";
+    public static final String AMAZON_FINE_FOOD_REVIEWS_file="dataset/amazon-reviews.csv";
 
     public static List<AmazonFineFoodReview> read_reviews(String dataset_file) {
         List<AmazonFineFoodReview> allReviews = new ArrayList<>();
@@ -48,7 +48,7 @@ public class WordCount_Seq {
         List<String> words = new ArrayList<String>();
         for(AmazonFineFoodReview review : allReviews) {
             Pattern pattern = Pattern.compile("([a-zA-Z]+)");
-            Matcher matcher = pattern.matcher(review.get_Summary());
+            Matcher matcher = pattern.matcher(review.getSummary());
 
             while(matcher.find())
                 words.add(matcher.group().toLowerCase());
