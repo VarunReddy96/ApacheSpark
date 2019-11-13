@@ -45,10 +45,6 @@
         <enabled>true</enabled>
       </snapshots>
     </repository>
-    <repository>
-      <id>sparkfhe-remote</id>
-      <url>https://github.com/SpiRITlab/SparkFHE-Maven-Repo/raw/${sparkfhe.lib.rev}</url>
-    </repository>
   </repositories>
 
   <!-- sub modules -->
