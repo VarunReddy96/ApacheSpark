@@ -1,0 +1,7 @@
+package edu.rit.cs;
+
+public class census2 {
+    private String STNAME,CTYNAME;
+    private int YEAR,AGEGRP,WA_MALE,WA_FEMALE,BA_MALE,BA_FEMALE,IA_MALE,IA_FEMALE,AA_MALE,AA_FEMALE,NA_MALE,NA_FEMALE,TOM_MALE,TOM_FEMALE;
+
+}

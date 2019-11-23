@@ -15,8 +15,8 @@ import java.util.regex.Pattern;
 
 public class WordCount_Spark {
 
-    public static final String OutputDirectory = "dataset/review-outputs";
-    public static final String DatasetFile = "dataset/amazon-reviews.csv";
+    public static final String OutputDirectory = "D:/Courses/parallel computing/parallelcomputing/word_count/dataset/review-outputs";
+    public static final String DatasetFile = "D:/Courses/parallel computing/parallelcomputing/word_count/dataset/amazon-reviews.csv";
 
     public static boolean deleteDirectory(File directoryToBeDeleted) {
         File[] allContents = directoryToBeDeleted.listFiles();
@@ -27,14 +27,14 @@ public class WordCount_Spark {
     }
 
     public static void wordcount_1(JavaSparkContext jsc) {
-        JavaRDD<String> textFile = jsc.textFile("word_count/"+DatasetFile);
+        JavaRDD<String> textFile = jsc.textFile(DatasetFile);
         JavaPairRDD<String, Integer> counts = textFile
                 .flatMap(s -> Arrays.asList(s.split(" ")).iterator())
                 .mapToPair(word -> new Tuple2<>(word, 1))
                 .reduceByKey((a, b) -> a + b);
 
-        deleteDirectory(new File("word_count/"+OutputDirectory+"_1"));
-        counts.saveAsTextFile("word_count/"+OutputDirectory+"_1");
+        deleteDirectory(new File(OutputDirectory+"_1"));
+        counts.saveAsTextFile(OutputDirectory+"_1");
     }
 
 
@@ -43,7 +43,7 @@ public class WordCount_Spark {
                 .option("header", "true")
                 .option("delimiter", ",")
                 .option("inferSchema", "true")
-                .csv("word_count/"+DatasetFile);
+                .csv(DatasetFile);
 
         ds = ds.withColumn("Time", ds.col("Time").cast(DataTypes.IntegerType))
                 .withColumn("Score", ds.col("Score").cast(DataTypes.IntegerType))
@@ -93,7 +93,7 @@ public class WordCount_Spark {
                 .option("header", "true")
                 .option("delimiter", ",")
                 .option("inferSchema", "true")
-                .csv("word_count/"+DatasetFile);
+                .csv(DatasetFile);
 
         ds = ds.withColumn("Time", ds.col("Time").cast(DataTypes.IntegerType))
                 .withColumn("Score", ds.col("Score").cast(DataTypes.IntegerType))
@@ -143,12 +143,13 @@ public class WordCount_Spark {
 //        Tuple2<String, Integer> t = kv_pair.first();
 //        System.out.println(t._1() + " " + t._2());
 
-        deleteDirectory(new File("word_count/"+OutputDirectory+"_3"));
-        kv_pair.saveAsTextFile("word_count/"+OutputDirectory+"_3");
+        deleteDirectory(new File(OutputDirectory+"_3"));
+        kv_pair.saveAsTextFile(OutputDirectory+"_3");
     }
 
 
     public static void main(String[] args) throws Exception {
+        System.setProperty("hadoop.home.dir","D:\\Courses\\parallel computing\\hadoop-2.6.0" );
         // Create a SparkConf that loads defaults from system properties and the classpath
         SparkConf sparkConf = new SparkConf();
         sparkConf.set("spark.master", "local[4]");
