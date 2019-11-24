@@ -1,7 +1,7 @@
 package edu.rit.cs;
 
 /*
- * LargeTriangleParallel.java
+ * DiversityIndex.java
  *
  * Version:
  *     $Id$
